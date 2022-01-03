@@ -1,13 +1,23 @@
 import React from "react";
-function JoinBlock(){
+import axios from "axios";
+
+function JoinBlock({onLogin}){
 
     const [roomId, setRoomId] = React.useState('')
     const [userName, setUserName] = React.useState('')
 
     const onEnter = () => {
+        if(!roomId || !userName){
+            return alert('Неверные данные')
+        }
+
+        axios.post('http://localhost:5000/rooms', {
+            roomId,
+            userName
+        }).then(onLogin)
+
         console.log(roomId,userName);
     }
-
     return(
         <div>
         <input type="text" placeholder="ROOM ID" value={roomId} onChange={e => setRoomId(e.target.value)}/>

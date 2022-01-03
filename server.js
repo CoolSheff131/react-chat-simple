@@ -1,5 +1,5 @@
 const express = require('express');
-
+const cors = require('cors');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
@@ -8,14 +8,27 @@ const io = require('socket.io')(server, {
   },
 });
 
+app.use(cors());
+app.use(express.json());
+
 const rooms = new Map([]);
 
-app.get('/users', function (req, res) {
+app.get('/rooms', function (req, res) {
   res.json(rooms);
 });
 
 app.post('/rooms', function (req, res) {
-  console.log('gg');
+  const { roomId, userName } = req.body;
+  if (!rooms.has(roomId)) {
+    rooms.set(
+      roomId,
+      new Map([
+        ['users', new Map()],
+        ['messages', []],
+      ]),
+    );
+  }
+  res.json(rooms);
 });
 
 io.on('connection', (socket) => {
