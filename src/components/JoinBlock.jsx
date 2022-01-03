@@ -1,8 +1,8 @@
 function JoinBlock(){
     return(
         <div>
-        <input type="text" placeholder="ROOM ID" value=""></input>
-        <input type="text" placeholder="Ваше имя" value=""></input>
+        <input type="text" placeholder="ROOM ID"/>
+        <input type="text" placeholder="Ваше имя"/>
         <button>ВОЙТИ</button>
       </div>
     )
