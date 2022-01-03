@@ -14,6 +14,10 @@ app.get('/users', function (req, res) {
   res.json(rooms);
 });
 
+app.post('/rooms', function (req, res) {
+  console.log('gg');
+});
+
 io.on('connection', (socket) => {
   console.log('user connected', socket);
 });
