@@ -1,18 +1,23 @@
 const express = require('express');
+const useSocket = require('socket.io');
 
 const app = express();
+const server = require('http').Server(app);
+const io = useSocket(server);
 
-const rooms = {
-  rooms: [],
-};
+const rooms = new Map([]);
 
 app.get('/users', function (req, res) {
-  res.send('ss');
+  res.json(rooms);
 });
 
-app.listen(5000, (err) => {
+io.on('connection', (socket) => {
+  console.log('user connected', socket);
+});
+
+server.listen(5000, (err) => {
   if (err) {
     throw Error(err);
   }
-  console.log('Started');
+  console.log('Server has been started!');
 });
