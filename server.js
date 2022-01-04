@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { Socket } = require('socket.io');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
@@ -32,7 +33,13 @@ app.post('/rooms', function (req, res) {
 });
 
 io.on('connection', (socket) => {
-  console.log('user connected', socket);
+  socket.on('ROOM:JOIN', ({ roomId, userName }) => {
+    socket.join(roomId);
+    rooms.get(roomId).get('users').set(socket.id, userName);
+
+    const users = [...rooms.get(roomId).get('users').values()];
+    socket.to(roomId).emit('ROOM:JOINED', { users });
+  });
 });
 
 server.listen(5000, (err) => {

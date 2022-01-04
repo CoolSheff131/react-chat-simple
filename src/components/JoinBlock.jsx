@@ -11,23 +11,32 @@ function JoinBlock({onLogin}){
         if(!roomId || !userName){
             return alert('Неверные данные')
         }
-        setIsLoading(true)
-        await axios.post('http://localhost:5000/rooms', {
+        const obj = {
             roomId,
             userName
-        })
-        onLogin()
-
-        console.log(roomId,userName);
+        }
+        setIsLoading(true)
+        await axios.post('http://localhost:5000/rooms', obj)
+        onLogin(obj)
     }
     return(
-        <div>
-        <input type="text" placeholder="ROOM ID" value={roomId} onChange={e => setRoomId(e.target.value)}/>
-        <input type="text" placeholder="Ваше имя" value={userName} onChange={e => setUserName(e.target.value)}/>
-        <button disabled={isLoading} onClick={onEnter}>
-            {isLoading? 'ВХОД...':'ВОЙТИ'}
-        </button>
-      </div>
+        <div className="join-block">
+      <input
+        type="text"
+        placeholder="Room ID"
+        value={roomId}
+        onChange={(e) => setRoomId(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Ваше имя"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+      />
+      <button disabled={isLoading} onClick={onEnter} className="btn btn-success">
+        {isLoading ? 'ВХОД...' : 'ВОЙТИ'}
+      </button>
+    </div>
     )
 }
 
