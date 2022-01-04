@@ -11,13 +11,13 @@ function JoinBlock({onLogin}){
         if(!roomId || !userName){
             return alert('Неверные данные')
         }
-        const obj = {
+        const userData = {
             roomId,
             userName
         }
         setIsLoading(true)
-        await axios.post('http://localhost:5000/rooms', obj)
-        onLogin(obj)
+        await axios.post('http://localhost:5000/rooms', userData)
+        onLogin(userData)
     }
     return(
         <div className="join-block">
