@@ -13,11 +13,7 @@ function App() {
     });
   };
   console.log(state);
-  return (
-    <div className="App">
-      <JoinBlock onLogin={onLogin} />
-    </div>
-  );
+  return <div className="App">{!state.isAuth && <JoinBlock onLogin={onLogin} />}</div>;
 }
 
 export default App;
