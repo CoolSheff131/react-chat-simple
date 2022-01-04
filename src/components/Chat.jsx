@@ -18,15 +18,15 @@ console.log(users);
   React.useEffect(() => {
     messagesRef.current.scrollTo(0, 99999);
   }, [messages]);
-
+  const usersInRoom = Array.isArray(users)? users: users.users
   return (
     <div className="chat">
       <div className="chat-users">
         Комната: <b>{roomId}</b>
         <hr />
-        <b>Онлайн ({users.length}):</b>
+        <b>Онлайн ({usersInRoom.length}):</b>
         <ul>
-          {Array.isArray(users)  && users.map((name, index) => (
+          { usersInRoom.map((name, index) => (
             <li key={name + index}>{name}</li>
           ))}
         </ul>
